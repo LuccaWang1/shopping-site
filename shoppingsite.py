@@ -15,7 +15,6 @@ app = Flask(__name__)
 
 # A secret key is needed to use Flask sessioning features
 
-
 app.secret_key = os.environ["SESSION_PASS"]
 
 # Normally, if you refer to an undefined variable in a Jinja template,
