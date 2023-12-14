@@ -50,7 +50,8 @@ def show_melon(melon_id):
     Show all info about a melon. Also, provide a button to buy that melon.
     """
 
-    melon = melons.get_by_id("meli")
+    melon = melons.get_by_id(melon_id) #fixed argument
+
     print(melon)
     return render_template("melon_details.html",
                            display_melon=melon)
