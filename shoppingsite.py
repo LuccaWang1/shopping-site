@@ -13,9 +13,9 @@ import melons
 
 app = Flask(__name__)
 
-# A secret key is needed to use Flask sessioning features
+# A secret key is needed to use Flask session features
 
-app.secret_key = os.environ["SESSION_PASS"]
+app.secret_key = "BUTTERFLY"
 
 # Normally, if you refer to an undefined variable in a Jinja template,
 # Jinja silently ignores this. This makes debugging difficult, so we'll
@@ -66,33 +66,16 @@ def add_to_cart(melon_id):
     page and display a confirmation message: 'Melon successfully added to
     cart'."""
 
-    if "cart" not in session:
-        session["cart"] = {}
+    if "cart" in session:
+        cart = session["cart"]
+    else:
+        cart = session['cart'] = {}
     
-    if melon_id not in session["cart"]:
-        session["cart"][melon_id] = 1
-    else: 
-        session["cart"][melon_id] += 1
-    
-    # session.modified = True
+    cart[melon_id] = cart.get(melon_id, 0) + 1
 
-    flash("Melon added!")
+    flash("Melon successfully added to cart.")
 
     return redirect("/cart")
-
-
-    # TODO: Finish shopping cart functionality
-
-    # The logic here should be something like:
-    #
-    # - check if a "cart" exists in the session, and create one (an empty
-    #   dictionary keyed to the string "cart") if not
-    # - check if the desired melon id is the cart, and if not, put it in
-    # - increment the count for that melon id by 1
-    # - flash a success message
-    # - redirect the user to the cart page
-
-  
 
 
 @app.route("/cart")
