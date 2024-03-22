@@ -81,35 +81,33 @@ def add_to_cart(melon_id):
 @app.route("/cart")
 def show_shopping_cart():
     """Display content of shopping cart."""
-    melon_list = []
-    total_cost = 0
-   
-   
-    for key in session["cart"]:
-        print(key)
+    
+    #keep track of the total cost of the order 
+    order_total = 0
 
-    # get_by_id(melon_id)
+    #list to hold melon objects corresponding to the melon_id's in the cart
+    cart_list = []
 
+    #get cart dict out of the session, including an empty one
+    cart = session.get("cart", {})
+    
+    #loop over the cart dict 
+    for melon_id, quantity in cart.items():
+        #get melon object corresponding to id
+        melon = melons.get_by_id(melon_id)
 
-    # TODO: Display the contents of the shopping cart.
+        total_cost = quantity * melon.price 
+        order_total += total_cost
 
-    # The logic here will be something like:
-    #
-    # - get the cart dictionary from the session
-    # - create a list to hold melon objects and a variable to hold the total
-    #   cost of the order
-    # - loop over the cart dictionary, and for each melon id:
-    #    - get the corresponding Melon object
-    #    - compute the total cost for that type of melon
-    #    - add this to the order total
-    #    - add quantity and total cost as attributes on the Melon object
-    #    - add the Melon object to the list created above
-    # - pass the total order cost and the list of Melon objects to the template
-    #
-    # Make sure your function can also handle the case wherein no cart has
-    # been added to the session
+        #add quan and cost as attribute to Melon object 
+        melon.quantity = quantity
+        melon.total_cost = total_cost
 
-    return render_template("cart.html")
+        #add the Melon object to the list 
+        cart_list.append(melon)
+
+    #pass list of Melon objects and order total to cart template directly below 
+    return render_template("cart.html", cart=cart_list, order_total=order_total)
 
 
 @app.route("/login", methods=["GET"])
