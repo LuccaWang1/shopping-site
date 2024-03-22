@@ -15,7 +15,7 @@ app = Flask(__name__)
 
 # A secret key is needed to use Flask session features
 
-app.secret_key = "BUTTERFLY"
+app.secret_key = os.environ["KEY"]
 
 # Normally, if you refer to an undefined variable in a Jinja template,
 # Jinja silently ignores this. This makes debugging difficult, so we'll
