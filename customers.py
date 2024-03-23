@@ -4,7 +4,7 @@
 class Customer:
     """Ubermelon customer."""
 
-    #setting attributes by using self 
+    #setting attributes by using self
     def __init__(
             self,
             first_name,
@@ -25,6 +25,27 @@ class Customer:
     
 #function to read data file, customers.txt
 def read_customers_from_file(filepath):
-    """Read customer information and populate dictionary of melon types."""
-
+    """Read customer information and populate dictionary of melon types.
     
+    Dictionary will be: {email: Customer(  )}. This format allows look up of a customer by email address.
+    """
+
+    customers = {}
+
+    with open(filepath) as file:
+        for line in file:
+            (
+                first_name,
+                last_name,
+                email,
+                password
+            ) = line.strip().split("|")
+
+            customers[email] = Customer(
+                first_name,
+                last_name,
+                email,
+                password,
+            )
+    
+    return customers
