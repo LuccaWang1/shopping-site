@@ -45,13 +45,13 @@ def list_melons():
 
 
 @app.route("/melon/<melon_id>")
-def show_melon(melon_id):
+def show_melon(melon_id): #when URL routing with details, an addition to the link, we have to pass in the variable as a parameter to the view function
     """Return page showing the details of a given melon.
 
     Show all info about a melon. Also, provide a button to buy that melon.
     """
 
-    melon = melons.get_by_id(melon_id) #fixed argument
+    melon = melons.get_by_id(melon_id) 
 
     print(melon)
     return render_template("melon_details.html",
@@ -73,6 +73,8 @@ def add_to_cart(melon_id):
     
     cart[melon_id] = cart.get(melon_id, 0) + 1
 
+    #print(cart) - temporary testing to make sure melon was added to cart 
+
     flash("Melon successfully added to cart.")
 
     return redirect("/cart")
@@ -82,13 +84,13 @@ def add_to_cart(melon_id):
 def show_shopping_cart():
     """Display content of shopping cart."""
     
-    #keep track of the total cost of the order 
+    #keep track of the total cost of the order, running tally
     order_total = 0
 
     #list to hold melon objects corresponding to the melon_id's in the cart
     cart_list = []
 
-    #get cart dict out of the session, including an empty one
+    #get cart dict out of the session, including if an empty one
     cart = session.get("cart", {})
     
     #loop over the cart dict 
@@ -96,8 +98,8 @@ def show_shopping_cart():
         #get melon object corresponding to id
         melon = melons.get_by_id(melon_id)
 
-        total_cost = quantity * melon.price 
-        order_total += total_cost
+        total_cost = quantity * melon.price #subtotal: get cost with quantity times price
+        order_total += total_cost #for total: adding cost to total cost for running tally
 
         #add quan and cost as attribute to Melon object 
         melon.quantity = quantity
@@ -106,7 +108,7 @@ def show_shopping_cart():
         #add the Melon object to the list 
         cart_list.append(melon)
 
-    #pass list of Melon objects and order total to cart template directly below 
+    #pass cart and total to Jinja template 
     return render_template("cart.html", cart=cart_list, order_total=order_total)
 
 
