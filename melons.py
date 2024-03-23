@@ -6,7 +6,7 @@ melon by id.
 It reads melon data in from a text file.
 """
 
-
+#define a Melon class to use the object-oriented programming features of methods and attributes for melon instances
 class Melon:
     """An Ubermelon Melon type."""
 
@@ -33,13 +33,13 @@ class Melon:
 
         return f"${self.price:.2f}"
 
-    def __repr__(self):
+    def __repr__(self): #repr makes for an easy to understand version of a Melon object for reading in the terminal while developing
         """Convenience method to show information about melon in console."""
 
         return (
             f"<Melon: {self.melon_id}, {self.common_name}, {self.price_str()}>"
         )
-
+    
 
 def read_melon_types_from_file(filepath):
     """Read melon type data and populate dictionary of melon types.
