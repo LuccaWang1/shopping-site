@@ -49,3 +49,11 @@ def read_customers_from_file(filepath):
             )
     
     return customers
+
+ 
+def get_by_email(email): #enabled by dict created by helper func above, look up customers by email
+    """Get the customer's information from the dictionary of all customers of the Customer class when provided their email address."""
+
+    return customers[email]
+
+customers = read_customers_from_file("customers.txt") #using file that contains the customer data - and this customers variable is used by the helper function to get the customer by their email address above 
