@@ -129,7 +129,7 @@ def process_login():
     """
 
     email = request.form.get('email') #request/pull email from form
-    password = request.form.get('password') #request/pull password from form
+    password = request.form.get('password') #request/pull password from form, usually would NOT store passwords in site data for security purposes - pws are hashed with Passlib and Argon2 in my project PetPlanner, which is also on my GitHub account pinned to the top of my repos profile 
 
     user = customers.get_by_email(email) #user helper function in customers.py (w/ Class) to see if the user is already in the site's data based on the email address, per the helper function I wrote in that customers.py file 
 
@@ -146,6 +146,15 @@ def process_login():
     session["logged_in_customer_email"] = user.email
     flash("Logged in") #letting the user know and (re)setting the session (with the user's info., then the methods and attributes can be accessed throughout the program)
     return redirect('/melons') #user is now redirected to see all the melons, to choose which to add to their cart => $$
+
+
+@app.route("/logout")
+def process_logout(): 
+    """Log the user out. Since app is keeping track of if the user is logged in with the 'logged_in_customer_email' variable in the /login route with the process_login view function, the entry is simply deleted to log the user out and clear the session."""
+
+    del session["logged_in_customer_email"] #delete the session entry to log user out 
+    flash("Logged out.") #communicate to the user with a flash message, which also resets the session (to an empty dictionary)
+    redirect("/melons") #after logging out, send/redirect the user to the melons.html webpage where all the melon cards live 
 
 @app.route("/checkout")
 def checkout():

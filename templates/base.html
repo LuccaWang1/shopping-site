@@ -19,7 +19,7 @@
                     <!-- if in session, AKA if user is logged in -->
                     {% if "logged_in_customer_email" in session %} 
                     <!-- then the user will see "log out" when they are logged in -->
-                    <a class="nav-link" href="logout">Log Out</a>
+                    <a class="nav-link" href="/logout">Log Out</a>
                     <!-- otherwise, if the user is not logged in, they will see "log in" for the option to log in -->
                     {% else %}
                     <a class="nav-link" href="/login">Log In</a>
