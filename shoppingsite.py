@@ -138,14 +138,14 @@ def process_login():
         flash("No customer with that email found.")
         redirect('/login')
         
-    if password != user.password: #if there is a user with that email address, now check the password to what's already in the site data
+    if user.password != password: #if there is a user with that email address, now check the password to what's already in the site data
         flash("Incorrect password.")
         redirect('/login')
     
-    #finally, if not one of those above, where it isn't the user/user data matching what the data already stored in the site, then the email and password are correct, and the user is logged in and their information is stored in the session - by email, because that's how we're looking up users on this app, since that's what will no doubtedly be the unique identifier from user to user (name could be the same, pw could be the same, but only one email is created with those characters in user in general)
+    #finally, if not one of those above, where it isn't the user/user data matching what the data already stored in the site, then the email and password are correct, and the user is logged in and their information is stored in the session - by email, because that's how we're looking up users on this app, since that's what will no doubt be the unique identifier from user to user (name could be the same, pw could be the same, but only one email is created with those characters in user in general)
     session["logged_in_customer_email"] = user.email
     flash("Logged in") #letting the user know and (re)setting the session (with the user's info., then the methods and attributes can be accessed throughout the program)
-    redirect('/melons') #user is now redirected to see all the melons, to choose which to add to their cart => $$ 
+    return redirect('/melons') #user is now redirected to see all the melons, to choose which to add to their cart => $$
 
 @app.route("/checkout")
 def checkout():
