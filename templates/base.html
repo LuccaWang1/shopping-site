@@ -15,7 +15,16 @@
             <div class="collapse navbar-collapse">
                 <div class="navbar-nav">
                     <a class="nav-link" href="/cart"> <img class="melon-cart" src="/static/img/watermelon.png">My Melon Cart</a>
+                    <!-- Using Python's Jinja templating engine to conditionally show log out if user if logged in, and only log in if user is logged out/not logged in -->
+                    <!-- if in session, AKA if user is logged in -->
+                    {% if "logged_in_customer_email" in session %} 
+                    <!-- then the user will see "log out" when they are logged in -->
+                    <a class="nav-link" href="logout">Log Out</a>
+                    <!-- otherwise, if the user is not logged in, they will see "log in" for the option to log in -->
+                    {% else %}
                     <a class="nav-link" href="/login">Log In</a>
+                    {% endif %}
+                    <!-- end Jinja templating if statement in line directly above -->
                 </div>
             </div>
         </div>
