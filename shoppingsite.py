@@ -6,10 +6,12 @@ put melons in a shopping cart.
 Authors: Joel Burton, Christian Fernandez, Meggie Mahnken, Katie Byers.
 """
 
-from flask import Flask, render_template, redirect, flash, session
+from flask import Flask, render_template, redirect, flash, session, request
 import jinja2
 import os
+
 import melons
+import customers
 
 app = Flask(__name__)
 
@@ -121,28 +123,29 @@ def show_login():
 
 @app.route("/login", methods=["POST"])
 def process_login():
-    """Log user into site.
-
-    Find the user's login credentials located in the 'request.form'
-    dictionary, look up the user, and store them in the session.
+    """Log user into site: Find the user's login credentials located in the 'request.form'
+    
+    dictionary, look up the user, and store the user in the session.
     """
 
-    # TODO: Need to implement this!
+    email = request.form.get('email') #request/pull email from form
+    password = request.form.get('password') #request/pull password from form
 
-    # The logic here should be something like:
-    #
-    # - get user-provided name and password from request.form
-    # - use customers.get_by_email() to retrieve corresponding Customer
-    #   object (if any)
-    # - if a Customer with that email was found, check the provided password
-    #   against the stored one
-    # - if they match, store the user's email in the session, flash a success
-    #   message and redirect the user to the "/melons" route
-    # - if they don't, flash a failure message and redirect back to "/login"
-    # - do the same if a Customer with that email doesn't exist
+    user = customers.get_by_email(email) #user helper function in customers.py (w/ Class) to see if the user is already in the site's data based on the email address, per the helper function I wrote in that customers.py file 
 
-    return "Oops! This needs to be implemented"
-
+    #handling logic
+    if not user: #if not user in the site's system, then they can't log in and need to try again 
+        flash("No customer with that email found.")
+        redirect('/login')
+        
+    if password != user.password: #if there is a user with that email address, now check the password to what's already in the site data
+        flash("Incorrect password.")
+        redirect('/login')
+    
+    #finally, if not one of those above, where it isn't the user/user data matching what the data already stored in the site, then the email and password are correct, and the user is logged in and their information is stored in the session - by email, because that's how we're looking up users on this app, since that's what will no doubtedly be the unique identifier from user to user (name could be the same, pw could be the same, but only one email is created with those characters in user in general)
+    session["logged_in_customer_email"] = user.email
+    flash("Logged in") #letting the user know and (re)setting the session (with the user's info., then the methods and attributes can be accessed throughout the program)
+    redirect('/melons') #user is now redirected to see all the melons, to choose which to add to their cart => $$ 
 
 @app.route("/checkout")
 def checkout():
