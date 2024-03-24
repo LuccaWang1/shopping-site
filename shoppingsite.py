@@ -154,7 +154,8 @@ def process_logout():
 
     del session["logged_in_customer_email"] #delete the session entry to log user out 
     flash("Logged out.") #communicate to the user with a flash message, which also resets the session (to an empty dictionary)
-    redirect("/melons") #after logging out, send/redirect the user to the melons.html webpage where all the melon cards live 
+    return redirect("/melons") #after logging out, send/redirect the user to the melons.html webpage where all the melon cards live 
+
 
 @app.route("/checkout")
 def checkout():
