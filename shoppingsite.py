@@ -3,7 +3,7 @@
 Provides web interface for browsing melons, seeing detail about a melon, and
 put melons in a shopping cart.
 
-Authors: Joel Burton, Christian Fernandez, Meggie Mahnken, Katie Byers.
+Authors: Joel Burton, Christian Fernandez, Meggie Mahnken, Katie Byers, and Lucca Wang.
 """
 
 from flask import Flask, render_template, redirect, flash, session, request
