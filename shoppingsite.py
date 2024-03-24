@@ -15,18 +15,13 @@ import customers
 
 app = Flask(__name__)
 
-# A secret key is needed to use Flask session features
-
+#secret key is needed to use Flask session features
 app.secret_key = os.environ["KEY"]
 
-# Normally, if you refer to an undefined variable in a Jinja template,
-# Jinja silently ignores this. This makes debugging difficult, so we'll
-# set an attribute of the Jinja environment that says to make this an
-# error.
+#set an attribute of the Jinja environment that says to make Jinja ignoring an undefined variable an error.
 app.jinja_env.undefined = jinja2.StrictUndefined
 
-# This configuration option makes the Flask interactive debugger
-# more useful (you should remove this line in production though)
+#this configuration option makes the Flask interactive debugger more useful (would remove this line in production though)
 app.config['PRESERVE_CONTEXT_ON_EXCEPTION'] = True
 
 
@@ -157,15 +152,13 @@ def process_logout():
     return redirect("/melons") #after logging out, send/redirect the user to the melons.html webpage where all the melon cards live 
 
 
-@app.route("/checkout")
-def checkout():
-    """Checkout customer, process payment, and ship melons."""
+#could be next update of the app:
+# @app.route("/checkout")
+# def checkout():
+#     """Checkout customer, process payment, and ship melons."""
 
-    # For now, we'll just provide a warning. Completing this is beyond the
-    # scope of this exercise.
-
-    flash("Sorry! Checkout will be implemented in a future version.")
-    return redirect("/melons")
+#     flash("Sorry! Checkout will be implemented in a future version.")
+#     return redirect("/melons")
 
 
 if __name__ == "__main__":
